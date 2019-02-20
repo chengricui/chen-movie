@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../blocs/movie_detail_bloc_provider.dart';
-import '../models/trailer_model.dart';
+import '../../blocs/movie/movie_detail_bloc_provider.dart';
+import '../../models/trailer_model.dart';
 
 class MovieDetail extends StatefulWidget {
   final posterUrl;

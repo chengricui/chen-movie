@@ -1,8 +1,10 @@
-import 'package:chen_movie/src/blocs/movie_detail_bloc_provider.dart';
-import 'package:chen_movie/src/ui/movie_detail.dart';
+import 'package:chen_movie/src/blocs/authentication/authentication.dart';
 import 'package:flutter/material.dart';
-import '../models/item_model.dart';
-import '../blocs/movies_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../models/item_model.dart';
+import '../../blocs/movie/movies.dart';
+
+import './movie_detail.dart';
 
 class MovieList extends StatefulWidget {
   _MovieListState createState() => _MovieListState();
@@ -23,10 +25,20 @@ class _MovieListState extends State<MovieList> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc authenticationBloc =
+        BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Popular Movies'),
-      ),
+      appBar: AppBar(title: Text('Popular Movies'), actions: <Widget>[
+        BlocProvider(
+          bloc: authenticationBloc,
+          child: IconButton(
+            icon: Icon(Icons.power_settings_new),
+            onPressed: () {
+              authenticationBloc.dispatch(LoggedOut());
+            },
+          ),
+        )
+      ]),
       body: StreamBuilder(
         stream: bloc.allMovies,
         builder: (context, AsyncSnapshot<ItemModel> snapshot) {
