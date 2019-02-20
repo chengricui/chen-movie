@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        -master
     docker:
       - image: cirrusci/flutter
     steps:
@@ -11,3 +8,13 @@ jobs:
       - run: flutter doctor
       - run: flutter test
       - run: flutter -v build apk --debug
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
